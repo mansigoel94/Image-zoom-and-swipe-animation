@@ -1,21 +1,21 @@
 package com.example.mansigoel.gesturesandtouches
 
-import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
-import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.Toast
-import com.github.chrisbanes.photoview.PhotoView
+import com.github.chrisbanes.photoview.OnViewTapListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.view_main.view.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnViewTapListener {
+    override fun onViewTap(view: View?, x: Float, y: Float) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private var view: View? = null
 
@@ -33,59 +33,67 @@ class MainActivity : AppCompatActivity() {
             view = LayoutInflater.from(baseContext).inflate(R.layout.view_main, null)
             alert.setView(view)
             dialog = alert.show()
-//            view?.iv_photoview?.setImageResource(R.drawable.wallpaper)
+
             view?.iv_photoview?.animation = AnimationUtils.loadAnimation(baseContext, R.anim.zoom_enter)
-            swipeAndTranslate(view?.iv_xyz)
+           // iv.isZ
+           swipeAndTranslate(view?.iv_photoview)
         }
     }
 
-    fun swipeAndTranslate(view: View?) {
+    fun swipeAndTranslate(view: TouchImageView?) {
+            view?.setOnTouchListener(object : OnSwipeTouchListener(baseContext) {
 
-        view?.setOnTouchListener(object : OnSwipeTouchListener(baseContext) {
             override fun onSwipeTop() {
-                Toast.makeText(baseContext,"Right",Toast.LENGTH_SHORT).show()
-                //setting and starting animation
-                val animation = AnimationUtils.loadAnimation(baseContext, R.anim.top_swipe)
-                view.startAnimation(animation)
-                //dismissing alert box after animation is completed
-                Handler().postDelayed({
-                    view.clearAnimation()
-                    dialog.dismiss()
-                }, 1000)
+                if (!view.isZoomed)
+                {
+                  //  Toast.makeText(baseContext, "Top", Toast.LENGTH_SHORT).show()
+                    //setting and starting animation
+                    val animation = AnimationUtils.loadAnimation(baseContext, R.anim.top_swipe)
+                    view.iv_photoview.startAnimation(animation)
+                    //dismissing alert box after animation is completed
+                    Handler().postDelayed({
+                        view!!.clearAnimation()
+                        dialog.dismiss()
+                    }, 500)
+                }
             }
 
             override fun onSwipeRight() {
-                Toast.makeText(baseContext,"Right",Toast.LENGTH_SHORT).show()
-                val animation = AnimationUtils.loadAnimation(baseContext, R.anim.right_swipe)
-                view.startAnimation(animation)
-                //dismissing alert box after animation is completed
-                Handler().postDelayed({
-                    dialog.dismiss()
-                }, 1000)
+                if (!view.isZoomed) {
+                 //   Toast.makeText(baseContext, "Right", Toast.LENGTH_SHORT).show()
+                    val animation = AnimationUtils.loadAnimation(baseContext, R.anim.right_swipe)
+                    view!!.startAnimation(animation)
+                    //dismissing alert box after animation is completed
+                    Handler().postDelayed({
+                        dialog.dismiss()
+                    }, 500)
+                }
             }
 
             override fun onSwipeLeft() {
-                Toast.makeText(baseContext,"Right",Toast.LENGTH_SHORT).show()
-                val animation = AnimationUtils.loadAnimation(baseContext, R.anim.left_swipe)
-                view.startAnimation(animation)
-                //dismissing alert box after animation is completed
-                Handler().postDelayed({
-                    dialog.dismiss()
-                }, 1000)
-
+                if (!view.isZoomed) {
+                 //   Toast.makeText(baseContext, "Left", Toast.LENGTH_SHORT).show()
+                    val animation = AnimationUtils.loadAnimation(baseContext, R.anim.left_swipe)
+                    view!!.startAnimation(animation)
+                    //dismissing alert box after animation is completed
+                    Handler().postDelayed({
+                        dialog.dismiss()
+                    }, 500)
+                }
             }
 
             override fun onSwipeBottom() {
-                Toast.makeText(baseContext,"Right",Toast.LENGTH_SHORT).show()
-                val animation = AnimationUtils.loadAnimation(baseContext, R.anim.bottom_swipe)
-                view.startAnimation(animation)
-                //dismissing alert box after animation is completed
-                Handler().postDelayed({
-                    view.clearAnimation()
-                    dialog.dismiss()
-                }, 1000)
+                if (!view.isZoomed) {
+                   // Toast.makeText(baseContext, "Bottom", Toast.LENGTH_SHORT).show()
+                    val animation = AnimationUtils.loadAnimation(baseContext, R.anim.bottom_swipe)
+                    view!!.startAnimation(animation)
+                    //dismissing alert box after animation is completed
+                    Handler().postDelayed({
+                        view.clearAnimation()
+                        dialog.dismiss()
+                    }, 500)
+                }
             }
-
         })
     }
 }

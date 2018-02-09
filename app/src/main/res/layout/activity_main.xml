@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.mansigoel.gesturesandtouches.MainActivity">
 
-    <ImageView
+    <com.example.mansigoel.gesturesandtouches.TouchImageView
         android:id="@+id/iv_original"
         android:layout_width="wrap_content"
         android:layout_height="110dp"

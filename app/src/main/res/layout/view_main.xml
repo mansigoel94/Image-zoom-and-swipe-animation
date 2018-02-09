@@ -7,18 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/black70Opacity">
 
-    <ImageView
-        android:id="@+id/iv_xyz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <com.github.chrisbanes.photoview.PhotoView
+    <com.example.mansigoel.gesturesandtouches.TouchImageView
         android:id="@+id/iv_photoview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
